@@ -5,7 +5,8 @@
       <div class="center-field__main-header">
         <ScoreCounter score="0"></ScoreCounter>
       </div>
-      <AnswersSection></AnswersSection>
+<!--      <AnswersSection></AnswersSection>-->
+      <BigGameSection></BigGameSection>
     </div>
     <div class="center-field__border"></div>
   </div>
@@ -13,14 +14,16 @@
 
 <script>
 import ScoreCounter from "@/components/ScoreCounter";
-import AnswersSection from "@/components/AnswersSection";
+// import AnswersSection from "@/components/AnswersSection";
+import BigGameSection from "@/components/BigGameSection";
 
 export default {
   name: "CenterField",
 
   components: {
-    AnswersSection,
     ScoreCounter,
+    // AnswersSection,
+    BigGameSection,
   },
 }
 </script>
@@ -59,6 +62,10 @@ export default {
   align-items: center;
   height: 25%;
   min-height: 70px;
+  background-color: #d1d1d1;
+}
+
+.center-field__main {
   background-color: #d1d1d1;
 }
 </style>
