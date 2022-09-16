@@ -1,15 +1,10 @@
 <template>
-  <PlayingField></PlayingField>
+  <router-view />
 </template>
 
 <script>
-import PlayingField from "@/components/PlayingField";
-
 export default {
   name: 'App',
-  components: {
-    PlayingField
-  }
 }
 </script>
 

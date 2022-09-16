@@ -1,7 +1,14 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 
-import MainPage from '../components/MainPage';
-import CreatePostForm from '../components/CreatePostForm';
+import PlayingField from "@/components/PlayingField";
 
-Vue.use(Router);
+export default createRouter({
+    history: createWebHistory(),
+    routes: [
+        {
+            path: '/',
+            name: 'PlayingField',
+            component: PlayingField,
+        },
+    ],
+});
