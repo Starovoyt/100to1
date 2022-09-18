@@ -8,5 +8,10 @@ export default new Vuex.Store({
         increment(state) {
             state.count++
         }
+    },
+    actions: {
+        SOCKET_newMessage(context, data) {
+            console.log('Message', data);
+        },
     }
 });

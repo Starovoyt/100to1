@@ -1,11 +1,35 @@
-const express = require('express')
-const app = express()
-const PORT = 3000
+const express = require('express');
+const app = express();
+const http = require('http');
+const cors = require('cors');
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
+app.use(express.json());
+app.use(cors());
+
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+    }
 });
 
-app.listen(PORT, () => {
-    console.log(`App is listening at http://localhost:${PORT}`)
+const PORT = 3000;
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    setInterval(() => {
+        socket.emit('newMessage', {
+            text: 'Hello',
+        });
+    }, 2000)
+});
+
+server.listen(PORT, () => {
+    console.log(`App is listening at http://localhost:${PORT}`);
 });
