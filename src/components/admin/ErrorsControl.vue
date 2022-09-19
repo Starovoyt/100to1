@@ -1,22 +1,30 @@
 <template>
   <div class="errors-control__container">
-    <ErrorsControlAside></ErrorsControlAside>
-    <ErrorsControlAside></ErrorsControlAside>
+    <ErrorsControllers></ErrorsControllers>
+    <ErrorsControllers></ErrorsControllers>
   </div>
 </template>
 
 <script>
-import ErrorsControlAside from "@/components/admin/ErrorsControlAside";
+import ErrorsControllers from "@/components/admin/ErrorsControllers";
 
 export default {
   name: "ErrorsControl",
 
   components: {
-    ErrorsControlAside,
+    ErrorsControllers,
   }
 }
 </script>
 
 <style scoped>
+.errors-control__container {
+  display: flex;
+}
+</style>
 
+<style>
+.errors-control__container .errors-controller-aside__container {
+  width: 50%;
+}
 </style>

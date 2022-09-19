@@ -20,5 +20,8 @@ export default {
 </script>
 
 <style scoped>
-
+.admin-panel__container {
+  height: 100%;
+  background-color: bisque;
+}
 </style>

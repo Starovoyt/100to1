@@ -22,5 +22,8 @@ export default {
 </script>
 
 <style scoped>
-
+.simple-answers__container {
+  background-color: bisque;
+  border-bottom: 1px solid #9a7e5d;
+}
 </style>
