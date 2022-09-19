@@ -58,6 +58,14 @@ export default new Vuex.Store({
                 && typeof (state.settings.blueTeamErrors) !== 'undefined'
                 && typeof (state.settings.redTeamScore) !== 'undefined'
                 && typeof (state.settings.redTeamErrors) !== 'undefined');
-        }
+        },
+
+        blueTeamScore: (state) => {
+            return state.settings.blueTeamScore;
+        },
+
+        redTeamScore: (state) => {
+            return state.settings.redTeamScore;
+        },
     }
 });

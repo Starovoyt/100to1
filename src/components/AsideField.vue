@@ -1,11 +1,13 @@
 <template>
   <div class="aside-field__container" :class="color">
-    <ScoreCounter score="0" :color="color"></ScoreCounter>
+    <ScoreCounter :score="score" :color="color"></ScoreCounter>
   </div>
 </template>
 
 <script>
 import ScoreCounter from "@/components/ScoreCounter";
+
+import {mapGetters} from 'vuex'
 
 export default {
   name: "AsideField",
@@ -26,6 +28,21 @@ export default {
   },
 
   computed: {
+    ...mapGetters([
+        'blueTeamScore',
+        'redTeamScore',
+    ]),
+
+    score() {
+      switch (this.color) {
+        case 'blue':
+          return this.blueTeamScore;
+        case 'red':
+          return this.redTeamScore;
+        default:
+          return 0;
+      }
+    }
   },
 }
 </script>
