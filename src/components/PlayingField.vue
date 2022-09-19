@@ -1,14 +1,18 @@
 <template>
   <div class="playing-field__container">
-    <AsideField color="blue"></AsideField>
-    <CenterField></CenterField>
-    <AsideField color="red"></AsideField>
+    <template v-if="false">
+      <AsideField color="blue"></AsideField>
+      <CenterField></CenterField>
+      <AsideField color="red"></AsideField>
+    </template>
+    <GameLoader v-else></GameLoader>
   </div>
 </template>
 
 <script>
 import AsideField from "@/components/AsideField";
 import CenterField from "@/components/CenterField";
+import GameLoader from "@/components/GameLoader";
 
 export default {
   name: "PlayingField",
@@ -16,6 +20,7 @@ export default {
   components: {
     AsideField,
     CenterField,
+    GameLoader,
   },
 }
 </script>

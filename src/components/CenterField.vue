@@ -5,8 +5,8 @@
       <div class="center-field__main-header">
         <ScoreCounter score="0"></ScoreCounter>
       </div>
-<!--      <AnswersSection></AnswersSection>-->
-      <BigGameSection></BigGameSection>
+      <AnswersSection v-if="true"></AnswersSection>
+      <BigGameSection v-else></BigGameSection>
     </div>
     <div class="center-field__border"></div>
   </div>
@@ -14,7 +14,7 @@
 
 <script>
 import ScoreCounter from "@/components/ScoreCounter";
-// import AnswersSection from "@/components/AnswersSection";
+import AnswersSection from "@/components/AnswersSection";
 import BigGameSection from "@/components/BigGameSection";
 
 export default {
@@ -22,7 +22,7 @@ export default {
 
   components: {
     ScoreCounter,
-    // AnswersSection,
+    AnswersSection,
     BigGameSection,
   },
 }
