@@ -1,18 +1,14 @@
 <template>
-  <div class="round-counter__container" :class="color">{{ round }}</div>
+  <div class="round-counter__container" :class="color">{{ currentRound }}</div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
   name: "RoundCounter",
 
   props: {
-    round: {
-      type: [String, Number],
-      required: true,
-      default: 1,
-    },
-
     color: {
       type: String,
       required: true,
@@ -20,7 +16,13 @@ export default {
       validator(value) {
         return ['red', 'blue'].includes(value)
       },
-    }
+    },
+  },
+
+  computed: {
+    ...mapGetters([
+      'currentRound',
+    ])
   },
 }
 </script>

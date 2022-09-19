@@ -1,13 +1,15 @@
 <template>
   <div class="answers-section-aside__container" :class="color">
-    <RoundCounter round="1" :color="color"></RoundCounter>
-    <ErrorsCounter></ErrorsCounter>
+    <RoundCounter :color="color"></RoundCounter>
+    <ErrorsCounter :color="color"></ErrorsCounter>
   </div>
 </template>
 
 <script>
 import RoundCounter from "@/components/RoundCounter";
 import ErrorsCounter from "@/components/ErrorsCounter";
+
+import {mapGetters} from 'vuex'
 
 export default {
   name: "AnswersSectionAside",
@@ -26,7 +28,13 @@ export default {
         return ['red', 'blue'].includes(value)
       },
     }
-  }
+  },
+
+  computed: {
+    ...mapGetters([
+      'currentRound',
+    ])
+  },
 }
 </script>
 
