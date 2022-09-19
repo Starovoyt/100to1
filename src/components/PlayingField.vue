@@ -1,6 +1,6 @@
 <template>
   <div class="playing-field__container">
-    <template v-if="false">
+    <template v-if="isAppInit">
       <AsideField color="blue"></AsideField>
       <CenterField></CenterField>
       <AsideField color="red"></AsideField>
@@ -14,6 +14,8 @@ import AsideField from "@/components/AsideField";
 import CenterField from "@/components/CenterField";
 import GameLoader from "@/components/GameLoader";
 
+import {mapGetters} from 'vuex'
+
 export default {
   name: "PlayingField",
 
@@ -22,6 +24,12 @@ export default {
     CenterField,
     GameLoader,
   },
+
+  computed: {
+    ...mapGetters([
+        'isAppInit',
+    ]),
+  }
 }
 </script>
 

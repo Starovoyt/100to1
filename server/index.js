@@ -4,8 +4,10 @@ const http = require('http');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const SettingsRoutes = require('./routes/api/settings');
+const RoundsRoutes = require('./routes/api/rounds');
+const AnswersRoutes = require('./routes/api/answers');
 
-const {getSettingsList} = require('./methods/settings/getSettingsList')
+const {getSettings} = require('./methods/settings')
 
 app.use(express.json());
 app.use(cors());
@@ -28,6 +30,8 @@ mongoose
     .catch((err) => console.log(err));
 
 app.use('/api/settings', SettingsRoutes)
+app.use('/api/rounds', RoundsRoutes)
+app.use('/api/answers', AnswersRoutes)
 
 const PORT = 3000;
 
@@ -39,7 +43,7 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     setInterval(async () => {
-        const settings = await getSettingsList();
+        const settings = await getSettings();
 
         socket.emit('newMessage', settings);
     }, 2000)

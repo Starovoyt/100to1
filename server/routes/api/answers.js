@@ -1,12 +1,12 @@
 const {Router} = require('express')
-const {getSettings} = require('../../methods/settings')
+const {getAnswers} = require('../../methods/answers')
 
 const router = Router()
 
 router.get('/', async (req, res) => {
     try {
-        const settings = await getSettings();
-        res.status(200).json(settings);
+        const answers = await getAnswers();
+        res.status(200).json(answers);
     } catch (error) {
         res.status(500).json({message: error.message});
     }

@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
   name: 'App',
 
@@ -14,6 +16,16 @@ export default {
       console.log('this method was fired by the socket server.', data)
     }
   },
+
+  methods: {
+    ...mapActions([
+      'INIT_APP',
+    ])
+  },
+
+  mounted() {
+    this.INIT_APP();
+  }
 }
 </script>
 
