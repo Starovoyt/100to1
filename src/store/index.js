@@ -60,12 +60,28 @@ export default new Vuex.Store({
                 && typeof (state.settings.redTeamErrors) !== 'undefined');
         },
 
+        generalScore: (state) => {
+            return state.settings.generalScore;
+        },
+
+        currentRound: (state) => {
+            return state.settings.currentRound;
+        },
+
         blueTeamScore: (state) => {
             return state.settings.blueTeamScore;
         },
 
         redTeamScore: (state) => {
             return state.settings.redTeamScore;
+        },
+
+        blueTeamErrors: (state) => {
+            return state.settings.blueTeamErrors;
+        },
+
+        redTeamErrors: (state) => {
+            return state.settings.redTeamErrors;
         },
     }
 });
