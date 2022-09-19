@@ -10,7 +10,7 @@ const AnswersSchema = new Schema({
         required: true,
     },
     round: {
-        type: String,
+        type: Number,
         required: true,
     },
     order: {

@@ -83,5 +83,16 @@ export default new Vuex.Store({
         redTeamErrors: (state) => {
             return state.settings.redTeamErrors;
         },
+
+        currentRoundData: (state, getters) => {
+            return state.rounds
+                .find((round) => round.name === getters.currentRound);
+        },
+
+        currentRoundAnswers: (state, getters) => {
+            return state.answers
+                .filter((answer) => answer.round === getters.currentRound)
+                .sort((answerA, answerB) => answerA.order - answerB.order);
+        },
     }
 });

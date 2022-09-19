@@ -1,8 +1,8 @@
 <template>
   <div class="answer-item__container" :class="{opened: isOpened}">
     <div class="answer-item__text__number">{{ number }}</div>
-    <div class="answer-item__text">Ответ</div>
-    <div class="answer-item__score">10</div>
+    <div class="answer-item__text">{{ text }}</div>
+    <div class="answer-item__score">{{ score }}</div>
   </div>
 </template>
 
@@ -11,15 +11,28 @@ export default {
   name: "AnswerItem",
 
   props: {
-    number: {
-      type: Number,
+    answer: {
+      type: Object,
       required: true,
-      default: 1,
+      default: () => ({}),
+    },
+  },
+
+  computed: {
+    number() {
+      return this.answer.order;
     },
 
-    isOpened: {
-      type: Boolean,
-      default: false,
+    text() {
+      return this.answer.text;
+    },
+
+    score() {
+      return this.answer.score;
+    },
+
+    isOpened() {
+      return this.answer.isOpened;
     },
   },
 }

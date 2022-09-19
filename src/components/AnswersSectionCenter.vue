@@ -1,22 +1,29 @@
 <template>
   <div class="answers-section-center__container">
-    <AnswerItem number="1"></AnswerItem>
-    <AnswerItem number="2"></AnswerItem>
-    <AnswerItem number="3" is-opened></AnswerItem>
-    <AnswerItem number="4"></AnswerItem>
-    <AnswerItem number="5"></AnswerItem>
-    <AnswerItem number="6"></AnswerItem>
+    <AnswerItem
+        v-for="answer in currentRoundAnswers"
+        :answer="answer"
+        :key="answer._id"
+    ></AnswerItem>
   </div>
 </template>
 
 <script>
 import AnswerItem from "@/components/AnswerItem";
 
+import {mapGetters} from 'vuex'
+
 export default {
   name: "AnswersSectionCenter",
 
   components: {
     AnswerItem,
+  },
+
+  computed: {
+    ...mapGetters([
+        'currentRoundAnswers',
+    ]),
   },
 }
 </script>
