@@ -17,6 +17,11 @@ class ClientApi {
         const getAnswersResponse = await axios.get(`${url}answers/`);
         return getAnswersResponse?.data || [];
     }
+
+    static async openAnswer(id) {
+        const openAnswerResponse = await axios.get(`${url}answers/open/${id}`);
+        return openAnswerResponse?.data || [];
+    }
 }
 
 export default ClientApi;

@@ -10,6 +10,28 @@ const getAnswers = async () => {
     return answers;
 }
 
+const openAnswer = async (id) => {
+    await Answers.findOneAndUpdate(
+        {_id: id},
+        {isOpened: true},
+        {new: true}
+    );
+
+    return getAnswers();
+}
+
+const closeAnswer = async (id) => {
+    await Answers.findOneAndUpdate(
+        {_id: id},
+        {isOpened: false},
+        {new: true}
+    );
+
+    return getAnswers();
+}
+
 module.exports = {
     getAnswers,
+    openAnswer,
+    closeAnswer,
 };

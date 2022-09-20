@@ -8,6 +8,7 @@ const RoundsRoutes = require('./routes/api/rounds');
 const AnswersRoutes = require('./routes/api/answers');
 
 const settingsApi = require('./methods/settings')
+const answersApi = require('./methods/answers')
 
 app.use(express.json());
 app.use(cors());
@@ -41,26 +42,38 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('PLAYING_FIELD_LOADED', async () => {
-        console.log('PLAYING_FIELD_LOADED')
-
         await socket.join('123');
     });
 
     socket.on('ADMIN_PANEL_LOADED', async () => {
-        console.log('ADMIN_PANEL_LOADED')
-
-        await socket.join('123');
+        await socket.join('456');
     });
 
     socket.on('DECREMENT_ROUND', async () => {
         const settings = await settingsApi.decrementRound();
-        socket.to('123').emit('SETTINGS_UPDATED', settings);
+        emitSocketEvent('SETTINGS_UPDATED', settings)
     });
 
     socket.on('INCREMENT_ROUND', async () => {
         const settings = await settingsApi.incrementRound();
-        socket.to('123').emit('SETTINGS_UPDATED', settings);
+        emitSocketEvent('SETTINGS_UPDATED', settings)
     });
+
+    socket.on('OPEN_ANSWER', async (id) => {
+        const answers = await answersApi.openAnswer(id);
+        emitSocketEvent('ANSWERS_UPDATED', answers)
+    });
+
+    socket.on('CLOSE_ANSWER', async (id) => {
+        const answers = await answersApi.closeAnswer(id);
+        emitSocketEvent('ANSWERS_UPDATED', answers)
+    });
+
+    function emitSocketEvent(event, data) {
+        socket.emit(event, data);
+        socket.to('123').emit(event, data);
+        socket.to('456').emit(event, data);
+    }
 });
 
 server.listen(PORT, () => {

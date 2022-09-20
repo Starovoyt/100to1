@@ -45,6 +45,10 @@ export default new Vuex.Store({
         SOCKET_SETTINGS_UPDATED({commit}, settings) {
             commit('SET_SETTINGS', settings);
         },
+
+        SOCKET_ANSWERS_UPDATED({commit}, answers) {
+            commit('SET_ANSWERS', answers);
+        },
     },
     getters: {
         isAppInit: (state) => {
@@ -86,7 +90,11 @@ export default new Vuex.Store({
 
         currentRoundData: (state, getters) => {
             return state.rounds
-                .find((round) => round.name === getters.currentRound);
+                .find((round) => round.name === getters.currentRound) || {};
+        },
+
+        currentRoundName: (state, getters) => {
+            return getters.currentRoundData.description;
         },
 
         currentRoundAnswers: (state, getters) => {
