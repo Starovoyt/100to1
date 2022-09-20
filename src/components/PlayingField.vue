@@ -29,7 +29,11 @@ export default {
     ...mapGetters([
         'isAppInit',
     ]),
-  }
+  },
+
+  mounted() {
+    this.$socket.emit('PLAYING_FIELD_LOADED');
+  },
 }
 </script>
 

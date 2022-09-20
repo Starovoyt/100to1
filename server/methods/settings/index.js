@@ -13,6 +13,32 @@ const getSettings = async () => {
         : {};
 }
 
+const decrementRound = async () => {
+    const settings = await getSettings();
+
+    const settingsNew = await Settings.findOneAndUpdate(
+        {_id: settings._id},
+        {currentRound: settings.currentRound - 1},
+        {new: true}
+    )
+
+    return settingsNew;
+}
+
+const incrementRound = async () => {
+    const settings = await getSettings();
+
+    const settingsNew = await Settings.findOneAndUpdate(
+        {_id: settings._id},
+        {currentRound: settings.currentRound + 1},
+        {new: true}
+    )
+
+    return settingsNew;
+}
+
 module.exports = {
     getSettings,
+    decrementRound,
+    incrementRound,
 };

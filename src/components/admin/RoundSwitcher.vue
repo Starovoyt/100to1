@@ -2,15 +2,36 @@
   <div class="round-switcher__container">
     <div class="round-swithcer__cur-round">Одинарная игра</div>
     <div class="round-switcher__controls">
-      <div class="round-switcher__control-prev">Предыдущий раунд</div>
-      <div class="round-switcher__control-next">Следующий раунд</div>
+      <div class="round-switcher__control-prev" @click="decrementRound">Предыдущий раунд</div>
+      <div class="round-switcher__control-next" @click="incrementRound">Следующий раунд</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "RoundSwitcher"
+  name: "RoundSwitcher",
+
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    customEmit: function (data) {
+      console.log('this method was fired by the socket server.', data)
+    }
+  },
+
+  methods: {
+    decrementRound() {
+      console.log(this.$socket)
+
+      this.$socket.emit('DECREMENT_ROUND');
+    },
+
+    incrementRound() {
+      this.$socket.emit('INCREMENT_ROUND');
+    },
+  },
 }
 </script>
 

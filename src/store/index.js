@@ -42,8 +42,8 @@ export default new Vuex.Store({
             commit('SET_ANSWERS', answers);
         },
 
-        SOCKET_newMessage(context, data) {
-            console.log('Message', data);
+        SOCKET_SETTINGS_UPDATED({commit}, settings) {
+            commit('SET_SETTINGS', settings);
         },
     },
     getters: {

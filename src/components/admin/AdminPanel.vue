@@ -15,7 +15,11 @@ export default {
   components: {
     RoundSwitcher,
     SimpleGameControl,
-  }
+  },
+
+  mounted() {
+    this.$socket.emit('ADMIN_PANEL_LOADED');
+  },
 }
 </script>
 

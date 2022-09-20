@@ -7,13 +7,13 @@ const SettingsRoutes = require('./routes/api/settings');
 const RoundsRoutes = require('./routes/api/rounds');
 const AnswersRoutes = require('./routes/api/answers');
 
-const {getSettings} = require('./methods/settings')
+const settingsApi = require('./methods/settings')
 
 app.use(express.json());
 app.use(cors());
 
 const server = http.createServer(app);
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -40,15 +40,30 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    socket.on('PLAYING_FIELD_LOADED', async () => {
+        console.log('PLAYING_FIELD_LOADED')
 
-    setInterval(async () => {
-        const settings = await getSettings();
+        await socket.join('123');
+    });
 
-        socket.emit('newMessage', settings);
-    }, 2000)
+    socket.on('ADMIN_PANEL_LOADED', async () => {
+        console.log('ADMIN_PANEL_LOADED')
+
+        await socket.join('123');
+    });
+
+    socket.on('DECREMENT_ROUND', async () => {
+        const settings = await settingsApi.decrementRound();
+        socket.to('123').emit('SETTINGS_UPDATED', settings);
+    });
+
+    socket.on('INCREMENT_ROUND', async () => {
+        const settings = await settingsApi.incrementRound();
+        socket.to('123').emit('SETTINGS_UPDATED', settings);
+    });
 });
 
 server.listen(PORT, () => {
     console.log(`App is listening at http://localhost:${PORT}`);
 });
+
