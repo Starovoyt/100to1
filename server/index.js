@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const SettingsRoutes = require('./routes/api/settings');
 const RoundsRoutes = require('./routes/api/rounds');
 const AnswersRoutes = require('./routes/api/answers');
+const QuestionsRoutes = require('./routes/api/questions');
 
 const settingsApi = require('./methods/settings')
 const answersApi = require('./methods/answers')
@@ -30,9 +31,10 @@ mongoose
     .then(() => console.log('MongoDB database Connected...'))
     .catch((err) => console.log(err));
 
-app.use('/api/settings', SettingsRoutes)
-app.use('/api/rounds', RoundsRoutes)
-app.use('/api/answers', AnswersRoutes)
+app.use('/api/settings', SettingsRoutes);
+app.use('/api/rounds', RoundsRoutes);
+app.use('/api/answers', AnswersRoutes);
+app.use('/api/questions', QuestionsRoutes);
 
 const PORT = 3000;
 

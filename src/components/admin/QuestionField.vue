@@ -1,10 +1,18 @@
 <template>
-  <div class="question-field__container">Какой-то очень длинный вопрос в две строки, а может даже в три</div>
+  <div class="question-field__container">{{ currentQuestionText }}</div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
-  name: "QuestionField"
+  name: "QuestionField",
+
+  computed: {
+    ...mapGetters([
+      'currentQuestionText',
+    ]),
+  },
 }
 </script>
 

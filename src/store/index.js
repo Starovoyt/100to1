@@ -5,6 +5,7 @@ export default new Vuex.Store({
     state: {
         rounds: [],
         answers: [],
+        questions: [],
         settings: {},
     },
     mutations: {
@@ -18,6 +19,10 @@ export default new Vuex.Store({
 
         SET_ANSWERS(state, answers) {
             state.answers = answers;
+        },
+
+        SET_QUESTIONS(state, questions) {
+            state.questions = questions;
         }
     },
     actions: {
@@ -25,6 +30,7 @@ export default new Vuex.Store({
             dispatch('GET_SETTINGS');
             dispatch('GET_ROUNDS');
             dispatch('GET_ANSWERS');
+            dispatch('GET_QUESTIONS');
         },
 
         async GET_SETTINGS({commit}) {
@@ -40,6 +46,11 @@ export default new Vuex.Store({
         async GET_ANSWERS({commit}) {
             const answers = await ClientApi.getAnswers();
             commit('SET_ANSWERS', answers);
+        },
+
+        async GET_QUESTIONS({commit}) {
+            const questions = await ClientApi.getQuestions();
+            commit('SET_QUESTIONS', questions);
         },
 
         SOCKET_SETTINGS_UPDATED({commit}, settings) {
@@ -95,6 +106,17 @@ export default new Vuex.Store({
 
         currentRoundName: (state, getters) => {
             return getters.currentRoundData.description;
+        },
+
+        currentQuestionData: (state, getters) => {
+            const questionsList = state.questions
+                .filter((question) => question.round === getters.currentRound);
+
+            return questionsList?.[0] || {};
+        },
+
+        currentQuestionText: (state, getters) => {
+            return getters.currentQuestionData.text;
         },
 
         currentRoundAnswers: (state, getters) => {
