@@ -77,13 +77,20 @@ io.on('connection', (socket) => {
     });
 
     socket.on('OPEN_ANSWER', async (id) => {
-        const answers = await answersApi.openAnswer(id);
-        emitSocketEvent('ANSWERS_UPDATED', answers)
+        const {answers, settings} = await answersApi.openAnswer(id);
+        emitSocketEvent('ANSWERS_UPDATED', answers);
+        emitSocketEvent('SETTINGS_UPDATED', settings);
     });
 
     socket.on('CLOSE_ANSWER', async (id) => {
-        const answers = await answersApi.closeAnswer(id);
-        emitSocketEvent('ANSWERS_UPDATED', answers)
+        const {answers, settings} = await answersApi.closeAnswer(id);
+        emitSocketEvent('ANSWERS_UPDATED', answers);
+        emitSocketEvent('SETTINGS_UPDATED', settings);
+    });
+
+    socket.on('GIVE_SCORE_TO_TEAM', async (team) => {
+        const settings = await settingsApi.giveScoreToTeam(team);
+        emitSocketEvent('SETTINGS_UPDATED', settings);
     });
 
     function emitSocketEvent(event, data) {

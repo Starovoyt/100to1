@@ -1,13 +1,19 @@
 <template>
   <div class="score-switcher__container">
-    <div class="score-switcher__item blue">Отдать очки</div>
-    <div class="score-switcher__item red">Отдать очки</div>
+    <div class="score-switcher__item blue" @click="giveScoreToTeam('blue')">Отдать очки</div>
+    <div class="score-switcher__item red" @click="giveScoreToTeam('red')">Отдать очки</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ScoreSwitcher"
+  name: "ScoreSwitcher",
+
+  methods: {
+    giveScoreToTeam(color) {
+      this.$socket.emit('GIVE_SCORE_TO_TEAM', color);
+    },
+  }
 }
 </script>
 

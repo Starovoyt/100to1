@@ -1,4 +1,5 @@
 const Answers = require('../../models/Answers');
+const SettingsMethods = require('../settings');
 
 const getAnswers = async () => {
     const answers = await Answers.find();
@@ -11,23 +12,57 @@ const getAnswers = async () => {
 }
 
 const openAnswer = async (id) => {
-    await Answers.findOneAndUpdate(
+    const answer = await Answers.findOneAndUpdate(
         {_id: id},
         {isOpened: true},
         {new: true}
     );
 
-    return getAnswers();
+    let settings = await SettingsMethods.getSettings();
+
+    if (!settings.isAnswersViewModeOn) {
+        let score = settings.generalScore;
+
+        if (settings.currentRound < 4) {
+            score += answer.score * settings.currentRound;
+        }
+
+        settings = await SettingsMethods.updateGeneralScore(score);
+    }
+
+    const answers = await getAnswers();
+
+    return {
+        answers,
+        settings,
+    };
 }
 
 const closeAnswer = async (id) => {
-    await Answers.findOneAndUpdate(
+    const answer = await Answers.findOneAndUpdate(
         {_id: id},
         {isOpened: false},
         {new: true}
     );
 
-    return getAnswers();
+    let settings = await SettingsMethods.getSettings();
+
+    if (!settings.isAnswersViewModeOn) {
+        let score = settings.generalScore;
+
+        if (settings.currentRound < 4) {
+            score -= answer.score * settings.currentRound;
+        }
+
+        settings = await SettingsMethods.updateGeneralScore(score);
+    }
+
+    const answers = await getAnswers();
+
+    return {
+        answers,
+        settings,
+    };
 }
 
 module.exports = {

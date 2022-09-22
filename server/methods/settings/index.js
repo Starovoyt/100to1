@@ -23,6 +23,7 @@ const decrementRound = async () => {
             redTeamErrors: 0,
             blueTeamErrors: 0,
             isAnswersViewModeOn: false,
+            generalScore: 0,
         },
         {new: true}
     )
@@ -40,6 +41,7 @@ const incrementRound = async () => {
             redTeamErrors: 0,
             blueTeamErrors: 0,
             isAnswersViewModeOn: false,
+            generalScore: 0,
         },
         {new: true}
     )
@@ -97,6 +99,40 @@ const toggleAnswersViewMode = async () => {
     return settingsNew;
 }
 
+const updateGeneralScore = async (score) => {
+    const settings = await getSettings();
+
+    const settingsNew = await Settings.findOneAndUpdate(
+        {_id: settings._id},
+        {generalScore: score},
+        {new: true}
+    )
+
+    return settingsNew;
+}
+
+const giveScoreToTeam = async (team) => {
+    const settings = await getSettings();
+    const updateData = {
+        generalScore: 0,
+        isAnswersViewModeOn: true,
+    };
+
+    if (team === 'red') {
+        updateData.redTeamScore = settings.redTeamScore + settings.generalScore;
+    } else if (team === 'blue') {
+        updateData.blueTeamScore = settings.blueTeamScore + settings.generalScore;
+    }
+
+    const settingsNew = await Settings.findOneAndUpdate(
+        {_id: settings._id},
+        updateData,
+        {new: true}
+    )
+
+    return settingsNew;
+}
+
 module.exports = {
     getSettings,
     decrementRound,
@@ -104,4 +140,6 @@ module.exports = {
     decrementTeamErrors,
     incrementTeamErrors,
     toggleAnswersViewMode,
+    updateGeneralScore,
+    giveScoreToTeam,
 };
