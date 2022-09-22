@@ -25,6 +25,8 @@ const openAnswer = async (id) => {
 
         if (settings.currentRound < 4) {
             score += answer.score * settings.currentRound;
+        } else if (settings.currentRound === 4) {
+            score += answer.score;
         }
 
         settings = await SettingsMethods.updateGeneralScore(score);
@@ -52,6 +54,8 @@ const closeAnswer = async (id) => {
 
         if (settings.currentRound < 4) {
             score -= answer.score * settings.currentRound;
+        } else if (settings.currentRound === 4) {
+            score -= answer.score;
         }
 
         settings = await SettingsMethods.updateGeneralScore(score);
