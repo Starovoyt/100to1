@@ -99,6 +99,10 @@ export default new Vuex.Store({
             return state.settings.redTeamErrors;
         },
 
+        isAnswersViewModeOn: (state) => {
+            return state.settings.isAnswersViewModeOn;
+        },
+
         currentRoundData: (state, getters) => {
             return state.rounds
                 .find((round) => round.name === getters.currentRound) || {};

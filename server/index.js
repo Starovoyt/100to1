@@ -51,6 +51,11 @@ io.on('connection', (socket) => {
         await socket.join('456');
     });
 
+    socket.on('TOGGLE_ANSWERS_VIEW_MODE', async () => {
+        const settings = await settingsApi.toggleAnswersViewMode();
+        emitSocketEvent('SETTINGS_UPDATED', settings)
+    });
+
     socket.on('DECREMENT_ROUND', async () => {
         const settings = await settingsApi.decrementRound();
         emitSocketEvent('SETTINGS_UPDATED', settings)

@@ -25,6 +25,10 @@ const SettingsSchema = new Schema({
         type: Number,
         required: true,
     },
+    isAnswersViewModeOn: {
+        type: Boolean,
+        required: true,
+    }
 });
 
 const Settings = model('settings', SettingsSchema);

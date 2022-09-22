@@ -22,6 +22,7 @@ const decrementRound = async () => {
             currentRound: settings.currentRound - 1,
             redTeamErrors: 0,
             blueTeamErrors: 0,
+            isAnswersViewModeOn: false,
         },
         {new: true}
     )
@@ -38,6 +39,7 @@ const incrementRound = async () => {
             currentRound: settings.currentRound + 1,
             redTeamErrors: 0,
             blueTeamErrors: 0,
+            isAnswersViewModeOn: false,
         },
         {new: true}
     )
@@ -83,10 +85,23 @@ const incrementTeamErrors = async (team) => {
     return settingsNew;
 }
 
+const toggleAnswersViewMode = async () => {
+    const settings = await getSettings();
+
+    const settingsNew = await Settings.findOneAndUpdate(
+        {_id: settings._id},
+        {isAnswersViewModeOn: !settings.isAnswersViewModeOn},
+        {new: true}
+    )
+
+    return settingsNew;
+}
+
 module.exports = {
     getSettings,
     decrementRound,
     incrementRound,
     decrementTeamErrors,
     incrementTeamErrors,
+    toggleAnswersViewMode,
 };

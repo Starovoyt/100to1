@@ -1,6 +1,12 @@
 <template>
   <div class="round-switcher__container">
-    <div class="round-swithcer__cur-round">{{ currentRoundName }}</div>
+    <div
+        class="round-swithcer__cur-round"
+        @click="toggleAnswersViewMode"
+        :class="{'answers-view-mode': isAnswersViewModeOn}"
+    >
+      {{ currentRoundName }}
+    </div>
     <div class="round-switcher__controls">
       <div class="round-switcher__control-prev" @click="decrementRound">Предыдущий раунд</div>
       <div class="round-switcher__control-next" @click="incrementRound">Следующий раунд</div>
@@ -15,6 +21,10 @@ export default {
   name: "RoundSwitcher",
 
   methods: {
+    toggleAnswersViewMode() {
+      this.$socket.emit('TOGGLE_ANSWERS_VIEW_MODE');
+    },
+
     decrementRound() {
       this.$socket.emit('DECREMENT_ROUND');
     },
@@ -26,6 +36,7 @@ export default {
 
   computed: {
     ...mapGetters([
+      'isAnswersViewModeOn',
       'currentRoundName',
     ]),
   },
@@ -37,6 +48,11 @@ export default {
   padding: 3px 0px;
   font-weight: bold;
   border-bottom: 1px solid #9a7e5d;
+}
+
+.round-swithcer__cur-round.answers-view-mode {
+  background-color: crimson;
+  color: white;
 }
 
 .round-swithcer__cur-round {
