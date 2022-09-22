@@ -1,13 +1,17 @@
 <template>
   <div class="admin-panel__container">
     <RoundSwitcher></RoundSwitcher>
-    <SimpleGameControl></SimpleGameControl>
+    <SimpleGameControl v-if="currentRound < 5"></SimpleGameControl>
+    <BigGameControl v-else></BigGameControl>
   </div>
 </template>
 
 <script>
 import RoundSwitcher from "@/components/admin/RoundSwitcher";
 import SimpleGameControl from "@/components/admin/SimpleGameControl";
+import BigGameControl from "@/components/admin/BigGameControl";
+
+import {mapGetters} from 'vuex';
 
 export default {
   name: "AdminPanel",
@@ -15,6 +19,13 @@ export default {
   components: {
     RoundSwitcher,
     SimpleGameControl,
+    BigGameControl,
+  },
+
+  computed: {
+    ...mapGetters([
+      'currentRound',
+    ])
   },
 
   mounted() {

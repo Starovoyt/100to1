@@ -123,6 +123,34 @@ export default new Vuex.Store({
             return getters.currentQuestionData.text;
         },
 
+        bigGameQuestions: (state) => {
+            return state.questions
+                .filter((question) => question.round === 5)
+                .sort((questionA, questionB) => questionA.order - questionB.order);
+        },
+
+        bigGameQuestionsWithAnswers: (state, getters) => {
+            const questions = getters.bigGameQuestions.slice(0);
+
+            questions.forEach((question) => {
+                question.answers = state.answers
+                    .filter((answer) => answer.round === question.round && answer.order === question.order)
+                    .sort((answerA, answerB) => {
+                        const textA = answerA.text.toLowerCase();
+                        const textB = answerB.text.toLowerCase();
+
+                        if (textA < textB)
+                            return -1;
+                        if (textA > textB)
+                            return 1;
+
+                        return 0;
+                    });
+            });
+
+            return questions;
+        },
+
         currentRoundAnswers: (state, getters) => {
             return state.answers
                 .filter((answer) => answer.round === getters.currentRound)
