@@ -1,7 +1,7 @@
 <template>
   <div class="errors-control__container">
-    <ErrorsControllers></ErrorsControllers>
-    <ErrorsControllers></ErrorsControllers>
+    <ErrorsControllers color="blue"></ErrorsControllers>
+    <ErrorsControllers color="red"></ErrorsControllers>
   </div>
 </template>
 

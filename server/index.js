@@ -61,6 +61,16 @@ io.on('connection', (socket) => {
         emitSocketEvent('SETTINGS_UPDATED', settings)
     });
 
+    socket.on('DECREMENT_TEAM_ERRORS', async (team) => {
+        const settings = await settingsApi.decrementTeamErrors(team);
+        emitSocketEvent('SETTINGS_UPDATED', settings)
+    });
+
+    socket.on('INCREMENT_TEAM_ERRORS', async (team) => {
+        const settings = await settingsApi.incrementTeamErrors(team);
+        emitSocketEvent('SETTINGS_UPDATED', settings)
+    });
+
     socket.on('OPEN_ANSWER', async (id) => {
         const answers = await answersApi.openAnswer(id);
         emitSocketEvent('ANSWERS_UPDATED', answers)

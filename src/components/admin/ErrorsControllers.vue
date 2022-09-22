@@ -1,13 +1,34 @@
 <template>
 <div class="errors-controllers__container">
-  <div class="errors-controllers__btn add">Добавить</div>
-  <div class="errors-controllers__btn delete">Удалить</div>
+  <div class="errors-controllers__btn add" @click="incrementRound">Добавить</div>
+  <div class="errors-controllers__btn delete" @click="decrementRound">Удалить</div>
 </div>
 </template>
 
 <script>
 export default {
-  name: "ErrorsControllers"
+  name: "ErrorsControllers",
+
+  props: {
+    color: {
+      type: String,
+      required: true,
+      default: 'blue',
+      validator(value) {
+        return ['red', 'blue'].includes(value)
+      },
+    },
+  },
+
+  methods: {
+    decrementRound() {
+      this.$socket.emit('DECREMENT_TEAM_ERRORS', this.color);
+    },
+
+    incrementRound() {
+      this.$socket.emit('INCREMENT_TEAM_ERRORS', this.color);
+    },
+  },
 }
 </script>
 
