@@ -1,17 +1,28 @@
 <template>
 <div class="big-game-section__container">
-  <BigGameAnswers></BigGameAnswers>
-  <BigGameAnswers></BigGameAnswers>
+  <BigGameAnswers
+      v-for="player in players"
+      :player="player"
+      :key="player._id"
+  ></BigGameAnswers>
 </div>
 </template>
 
 <script>
 import BigGameAnswers from "@/components/BigGameAnswers";
 
+import {mapState} from 'vuex';
+
 export default {
   name: "BigGameSection",
 
-  components: {BigGameAnswers}
+  components: {BigGameAnswers},
+
+  computed: {
+    ...mapState([
+      'players',
+    ]),
+  },
 }
 </script>
 

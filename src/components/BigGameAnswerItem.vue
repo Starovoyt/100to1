@@ -1,6 +1,6 @@
 <template>
   <div class="big-game-answer-item__container">
-    <template v-if="answer && answer.text && answer.score">
+    <template v-if="isBigGameAnswersShown && answer && answer.text && answer.score">
       <div class="big-game-answer-item__text">{{ answer.text }}</div>
       <div class="big-game-answer-item__score">{{ answer.score }}</div>
     </template>
@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 export default {
   name: "BigGameAnswerItem",
 
@@ -17,6 +19,12 @@ export default {
       type: Object,
       default: () => ({}),
     },
+  },
+
+  computed: {
+    ...mapState([
+      'isBigGameAnswersShown'
+    ]),
   },
 }
 </script>

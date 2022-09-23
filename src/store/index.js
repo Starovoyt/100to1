@@ -6,7 +6,9 @@ export default new Vuex.Store({
         rounds: [],
         answers: [],
         questions: [],
+        players: [],
         settings: {},
+        isBigGameAnswersShown: true,
     },
     mutations: {
         SET_SETTINGS(state, settings) {
@@ -23,6 +25,14 @@ export default new Vuex.Store({
 
         SET_QUESTIONS(state, questions) {
             state.questions = questions;
+        },
+
+        SET_PLAYERS(state, players) {
+            state.players = players;
+        },
+
+        SET_BIG_GAME_ANSWERS_SHOWN(state, isShown) {
+            state.isBigGameAnswersShown = isShown;
         }
     },
     actions: {
@@ -31,6 +41,7 @@ export default new Vuex.Store({
             dispatch('GET_ROUNDS');
             dispatch('GET_ANSWERS');
             dispatch('GET_QUESTIONS');
+            dispatch('GET_PLAYERS');
         },
 
         async GET_SETTINGS({commit}) {
@@ -53,12 +64,25 @@ export default new Vuex.Store({
             commit('SET_QUESTIONS', questions);
         },
 
+        async GET_PLAYERS({commit}) {
+            const players = await ClientApi.getPlayers();
+            commit('SET_PLAYERS', players);
+        },
+
         SOCKET_SETTINGS_UPDATED({commit}, settings) {
             commit('SET_SETTINGS', settings);
         },
 
         SOCKET_ANSWERS_UPDATED({commit}, answers) {
             commit('SET_ANSWERS', answers);
+        },
+
+        SOCKET_PLAYERS_UPDATED({commit}, players) {
+            commit('SET_PLAYERS', players);
+        },
+
+        SOCKET_TOGGLE_BIG_GAME_ANSWERS_SHOWN({commit, state}) {
+            commit('SET_BIG_GAME_ANSWERS_SHOWN', !state.isBigGameAnswersShown);
         },
     },
     getters: {

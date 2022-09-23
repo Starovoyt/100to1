@@ -1,10 +1,20 @@
 <template>
   <div class="big-game-player__container">
-    <BigGameQuestionItem
-        v-for="question in bigGameQuestionsWithAnswers"
-        :question="question"
-        :key="question._id"
-    ></BigGameQuestionItem>
+    <div
+        class="big-game-player__name"
+        :class="player.name"
+        @click="isQuestionsShown = !isQuestionsShown"
+    >
+      {{ playerName }}
+    </div>
+    <template v-if="isQuestionsShown">
+      <BigGameQuestionItem
+          v-for="question in bigGameQuestionsWithAnswers"
+          :question="question"
+          :player="player"
+          :key="question._id"
+      ></BigGameQuestionItem>
+    </template>
   </div>
 </template>
 
@@ -22,22 +32,47 @@ export default {
 
   props: {
     player: {
-      type: String,
+      type: Object,
       required: true,
-      validator(value) {
-        return ['first', 'second'].includes(value)
-      },
     },
+  },
+
+  data() {
+    return {
+      isQuestionsShown: false,
+    };
   },
 
   computed: {
     ...mapGetters([
       'bigGameQuestionsWithAnswers',
-    ])
+    ]),
+
+    playerName() {
+      switch (this.player.name) {
+        case 'first':
+          return 'Первый игрок';
+        case 'second':
+          return 'Второй игрок';
+        default:
+          return '';
+      }
+    },
   },
 }
 </script>
 
 <style scoped>
+.big-game-player__name {
+  padding: 10px;
+  border-bottom: 1px solid black;
+}
 
+.big-game-player__name.first {
+  background-color: darkcyan;
+}
+
+.big-game-player__name.second {
+  background-color: seagreen;
+}
 </style>

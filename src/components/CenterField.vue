@@ -3,7 +3,9 @@
     <div class="center-field__border"></div>
     <div class="center-field__main">
       <div class="center-field__main-header">
-        <ScoreCounter :score="generalScore"></ScoreCounter>
+        <ScoreCounter
+            :score="currentRound === 5 ? bigGameScore : generalScore"
+        ></ScoreCounter>
       </div>
       <AnswersSection v-if="currentRound < 5"></AnswersSection>
       <BigGameSection v-else></BigGameSection>
@@ -17,7 +19,7 @@ import ScoreCounter from "@/components/ScoreCounter";
 import AnswersSection from "@/components/AnswersSection";
 import BigGameSection from "@/components/BigGameSection";
 
-import {mapGetters} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 
 export default {
   name: "CenterField",
@@ -33,6 +35,22 @@ export default {
       'generalScore',
       'currentRound',
     ]),
+
+    ...mapState([
+      'players',
+    ]),
+
+    bigGameScore() {
+      return this.players.reduce((res1, player) => {
+        res1 += player.answers.reduce((res2, answer) => {
+          res2 += answer.score;
+
+          return res2;
+        }, 0);
+
+        return res1;
+      }, 0);
+    },
   }
 }
 </script>

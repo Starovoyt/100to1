@@ -1,11 +1,11 @@
 <template>
-<div class="big-game-answers__container">
-  <BigGameAnswerItem></BigGameAnswerItem>
-  <BigGameAnswerItem :answer="{text: 'За корешками', score: 99}"></BigGameAnswerItem>
-  <BigGameAnswerItem :answer="{text: 'За вкусняшками', score: 11}"></BigGameAnswerItem>
-  <BigGameAnswerItem :answer="{text: 'За штукатуркой', score: 53}"></BigGameAnswerItem>
-  <BigGameAnswerItem :answer="{text: 'За полярным кругом', score: 72}"></BigGameAnswerItem>
-</div>
+  <div class="big-game-answers__container">
+    <BigGameAnswerItem
+        v-for="answer in answersByOrder"
+        :answer="answer"
+        :key="answer._id"
+    ></BigGameAnswerItem>
+  </div>
 </template>
 
 <script>
@@ -16,7 +16,21 @@ export default {
 
   components: {
     BigGameAnswerItem,
-  }
+  },
+
+  props: {
+    player: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  computed: {
+    answersByOrder() {
+      return [undefined, undefined, undefined, undefined, undefined]
+          .map((el, index) => this.player.answers.find((answer) => answer.order === index + 1) || {_id: index});
+    },
+  },
 }
 </script>
 

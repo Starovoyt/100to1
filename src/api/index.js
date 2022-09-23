@@ -23,6 +23,11 @@ class ClientApi {
         return getQuestionsResponse?.data || [];
     }
 
+    static async getPlayers() {
+        const getPlayersResponse = await axios.get(`${url}players/`);
+        return getPlayersResponse?.data || [];
+    }
+
     static async openAnswer(id) {
         const openAnswerResponse = await axios.get(`${url}answers/open/${id}`);
         return openAnswerResponse?.data || [];

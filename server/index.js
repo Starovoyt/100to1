@@ -7,9 +7,11 @@ const SettingsRoutes = require('./routes/api/settings');
 const RoundsRoutes = require('./routes/api/rounds');
 const AnswersRoutes = require('./routes/api/answers');
 const QuestionsRoutes = require('./routes/api/questions');
+const PlayersRoutes = require('./routes/api/players');
 
 const settingsApi = require('./methods/settings')
 const answersApi = require('./methods/answers')
+const playersApi = require('./methods/players')
 
 app.use(express.json());
 app.use(cors());
@@ -35,6 +37,7 @@ app.use('/api/settings', SettingsRoutes);
 app.use('/api/rounds', RoundsRoutes);
 app.use('/api/answers', AnswersRoutes);
 app.use('/api/questions', QuestionsRoutes);
+app.use('/api/players', PlayersRoutes);
 
 const PORT = 3000;
 
@@ -91,6 +94,15 @@ io.on('connection', (socket) => {
     socket.on('GIVE_SCORE_TO_TEAM', async (team) => {
         const settings = await settingsApi.giveScoreToTeam(team);
         emitSocketEvent('SETTINGS_UPDATED', settings);
+    });
+
+    socket.on('SET_PLAYER_ANSWER', async (playerId, answer) => {
+        const players = await playersApi.setPlayerAnswer(playerId, answer);
+        emitSocketEvent('PLAYERS_UPDATED', players);
+    });
+
+    socket.on('TOGGLE_BIG_GAME_ANSWERS_SHOWN', () => {
+        emitSocketEvent('TOGGLE_BIG_GAME_ANSWERS_SHOWN');
     });
 
     function emitSocketEvent(event, data) {
