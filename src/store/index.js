@@ -9,6 +9,7 @@ export default new Vuex.Store({
         players: [],
         settings: {},
         isBigGameAnswersShown: true,
+        isGameStarterMode: false,
     },
     mutations: {
         SET_SETTINGS(state, settings) {
@@ -33,7 +34,11 @@ export default new Vuex.Store({
 
         SET_BIG_GAME_ANSWERS_SHOWN(state, isShown) {
             state.isBigGameAnswersShown = isShown;
-        }
+        },
+
+        SET_GAME_STARTER_MODE(state, isGameStarterMode) {
+            state.isGameStarterMode = isGameStarterMode;
+        },
     },
     actions: {
         async INIT_APP({dispatch}) {
@@ -83,6 +88,10 @@ export default new Vuex.Store({
 
         SOCKET_TOGGLE_BIG_GAME_ANSWERS_SHOWN({commit, state}) {
             commit('SET_BIG_GAME_ANSWERS_SHOWN', !state.isBigGameAnswersShown);
+        },
+
+        SOCKET_TOGGLE_GAME_STARTER_MODE({commit, state}) {
+            commit('SET_GAME_STARTER_MODE', !state.isGameStarterMode);
         },
     },
     getters: {

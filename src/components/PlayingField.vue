@@ -1,33 +1,42 @@
 <template>
   <div class="playing-field__container">
     <template v-if="isAppInit">
-      <AsideField color="blue"></AsideField>
-      <CenterField></CenterField>
-      <AsideField color="red"></AsideField>
+      <GameStarter v-if="isGameStarterMode"></GameStarter>
+      <template v-else>
+        <AsideField color="blue"></AsideField>
+        <CenterField></CenterField>
+        <AsideField color="red"></AsideField>
+      </template>
     </template>
     <GameLoader v-else></GameLoader>
   </div>
 </template>
 
 <script>
+import GameStarter from "@/components/GameStarter";
 import AsideField from "@/components/AsideField";
 import CenterField from "@/components/CenterField";
 import GameLoader from "@/components/GameLoader";
 
-import {mapGetters} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 
 export default {
   name: "PlayingField",
 
   components: {
+    GameStarter,
     AsideField,
     CenterField,
     GameLoader,
   },
 
   computed: {
+    ...mapState([
+      'isGameStarterMode'
+    ]),
+
     ...mapGetters([
-        'isAppInit',
+      'isAppInit',
     ]),
   },
 

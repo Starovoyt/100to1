@@ -105,6 +105,10 @@ io.on('connection', (socket) => {
         emitSocketEvent('TOGGLE_BIG_GAME_ANSWERS_SHOWN');
     });
 
+    socket.on('TOGGLE_GAME_STARTER_MODE', () => {
+        emitSocketEvent('TOGGLE_GAME_STARTER_MODE');
+    });
+
     function emitSocketEvent(event, data) {
         socket.emit(event, data);
         socket.to('123').emit(event, data);

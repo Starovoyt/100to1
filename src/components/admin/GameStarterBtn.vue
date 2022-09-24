@@ -1,10 +1,16 @@
 <template>
-<div class="game-starter-btn__container">Определить ход</div>
+  <div class="game-starter-btn__container" @click="btnClickHandler">Определить ход</div>
 </template>
 
 <script>
 export default {
-  name: "GameStarterBtn"
+  name: "GameStarterBtn",
+
+  methods: {
+    btnClickHandler() {
+      this.$socket.emit('TOGGLE_GAME_STARTER_MODE');
+    },
+  },
 }
 </script>
 
