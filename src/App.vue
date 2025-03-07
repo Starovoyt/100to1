@@ -30,6 +30,10 @@ export default {
 </script>
 
 <style>
+* {
+  user-select: none;
+}
+
 body {
   position: fixed;
   width: 100%;
